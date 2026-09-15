@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>تفاصيل الطالب | أكاديمية مِرقاة</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f4ed;
+            color: #183c2b;
+        }
+
+        header {
+            background: #183c2b;
+            color: white;
+            padding: 25px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.06);
+        }
+
+        h1, h2 {
+            margin-top: 0;
+        }
+
+        .info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .item {
+            background: #f7f4ed;
+            padding: 18px;
+            border-radius: 12px;
+        }
+
+        .label {
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 6px;
+        }
+
+        .value {
+            font-weight: bold;
+        }
+
+        .back {
+            display: inline-block;
+            background: #183c2b;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 10px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+
+        .back:hover {
+            opacity: 0.9;
+        }
+
+        .teacher-button {
+            display: inline-block;
+            background: #b88a44;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 10px;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: 0.2s;
+        }
+
+        .teacher-button:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 600px) {
+            .info {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🌿 أكاديمية مِرقاة</h1>
+    <p>تفاصيل الطالب</p>
+</header>
+
+<main class="container">
+
+    <div class="card">
+
+        <h2>👨‍🎓 بيانات الحساب</h2>
+
+        <div class="info">
+
+            <div class="item">
+                <div class="label">اسم المستخدم</div>
+                <div class="value">
+                    {{ student.username }}
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="label">البريد الإلكتروني</div>
+                <div class="value">
+                    {{ student.email|default:"غير مضاف" }}
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="label">الاسم الأول</div>
+                <div class="value">
+                    {{ student.first_name|default:"غير مضاف" }}
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="label">الاسم الأخير</div>
+                <div class="value">
+                    {{ student.last_name|default:"غير مضاف" }}
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="label">تاريخ التسجيل</div>
+                <div class="value">
+                    {{ student.date_joined|date:"Y-m-d" }}
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="label">حالة الحساب</div>
+                <div class="value">
+                    {% if student.is_active %}
+                        نشط
+                    {% else %}
+                        غير نشط
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>📋 الملف الشخصي</h2>
+
+        <div class="info">
+
+            <div class="item">
+                <div class="label">العمر</div>
+                <div class="value">
+                    {{ profile.age|default:"غير مضاف" }}
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="label">رقم الهاتف</div>
+                <div class="value">
+                    {{ profile.phone|default:"غير مضاف" }}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>👨‍🏫 المعلم المسؤول</h2>
+
+        <div class="info">
+
+            <div class="item">
+                <div class="label">المعلم الحالي</div>
+                <div class="value">
+                    {% if profile.teacher %}
+                        {{ profile.teacher.user.get_full_name|default:profile.teacher.user.username }}
+                    {% else %}
+                        لم يتم تعيين معلم
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <a href="{% url 'assign_student_teacher' student.id %}" class="teacher-button">
+            👨‍🏫 تعيين / تغيير المعلم
+        </a>
+
+    </div>

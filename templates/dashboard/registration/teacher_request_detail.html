@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>تفاصيل طلب المعلم | أكاديمية مِرقاة</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7f6;
+            color: #222;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 4px 18px rgba(0,0,0,.07);
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .row {
+            padding: 14px 0;
+            border-bottom: 1px solid #eee;
+            line-height: 1.8;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #1f6f5b;
+        }
+
+        .file-box {
+            margin-top: 15px;
+            padding: 18px;
+            background: #f8faf9;
+            border-radius: 12px;
+        }
+
+        .file-box a {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 9px 15px;
+            background: #1f6f5b;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            padding: 12px 22px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .approve {
+            background: #198754;
+            color: white;
+        }
+
+        .reject {
+            background: #dc3545;
+            color: white;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #1f6f5b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="{% url 'registration_requests' %}" class="back">
+        ← العودة إلى طلبات التسجيل
+    </a>
+
+    <div class="card">
+
+        <h1>👨‍🏫 تفاصيل طلب المعلم</h1>
+
+        <div class="row">
+            <span class="label">اسم المستخدم:</span>
+            {{ user.username }}
+        </div>
+
+        <div class="row">
+            <span class="label">البريد الإلكتروني:</span>
+            {{ user.email }}
+        </div>
+
+        <div class="row">
+            <span class="label">رقم الهاتف:</span>
+            {{ profile.phone }}
+        </div>
+
+        <div class="row">
+            <span class="label">التخصصات التي يستطيع تدريسها:</span>
+            <br>
+            {{ profile.specializations }}
+        </div>
+
+        <div class="row">
+            <span class="label">المؤهل الدراسي:</span>
+            {{ profile.qualification }}
+        </div>
+
+        <div class="row">
+            <span class="label">مقدار حفظ القرآن:</span>
+            {{ profile.quran_memorization }}
+        </div>
+
+        <div class="row">
+            <span class="label">مستوى التجويد النظري والعملي:</span>
+            {{ profile.tajweed_level }}
+        </div>
+
+        <div class="row">
+            <span class="label">الخبرة في تعليم القرآن:</span>
+            <br>
+            {{ profile.teaching_experience }}
+        </div>
+
+        <div class="row">
+            <span class="label">سنوات الخبرة:</span>
+            {{ profile.years_of_experience }}
+        </div>
+
+        <div class="row">
+            <span class="label">الأيام المتاحة:</span>
+            <br>
+            {{ profile.available_days }}
+        </div>
+
+        <div class="row">
+            <span class="label">المواعيد المتاحة:</span>
+            <br>
+            {{ profile.available_times }}
+        </div>
+
+        {% if profile.bio %}
+        <div class="row">
+            <span class="label">نبذة عن المعلم:</span>
+            <br>
+            {{ profile.bio }}
+        </div>
+        {% endif %}
+
+        <!-- الإجازة -->
+        <div class="file-box">
+
+            <strong>📜 الإجازة</strong>
+
+            {% if profile.ijazah %}
+                <br>
+                <a href="{{ profile.ijazah.url }}" target="_blank">
+                    📂 عرض / تحميل الإجازة
+                </a>
+            {% else %}
+                <p>لم يتم إرفاق إجازة.</p>
+            {% endif %}
+
+        </div>
+
+        <!-- تسجيل التلاوة -->
+        <div class="file-box">
+
+            <strong>🎧 تسجيل تلاوة أول وجه من سورة الطلاق</strong>
+
+            {% if profile.recitation_audio %}
+
+                <audio controls>
+                    <source
+                        src="{{ profile.recitation_audio.url }}"
+                    >
+                    متصفحك لا يدعم تشغيل الصوت.
+                </audio>
+
+            {% else %}
+
+                <p>لم يتم إرفاق تسجيل التلاوة.</p>
+
+            {% endif %}
+
+        </div>
+
+        <div class="row">
+            <span class="label">حالة الطلب:</span>
+            {{ profile.get_status_display }}
+        </div>
+
+        <div class="actions">
+
+            <form
+                method="POST"
+                action="{% url 'approve_registration' 'teacher' profile.id %}"
+            >
+                {% csrf_token %}
+
+                <button type="submit" class="approve">
+                    ✅ قبول المعلم
+                </button>
+            </form>
+
+            <form
+                method="POST"
+                action="{% url 'reject_registration' 'teacher' profile.id %}"
+            >
+                {% csrf_token %}
+
+                <button type="submit" class="reject">
+                    ❌ رفض الطلب
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

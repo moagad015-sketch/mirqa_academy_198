@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أقسام الاختبار | أكاديمية مِرقاة</title>
+<style>
+body{font-family:Arial;background:#f5f3ed;margin:0;padding:30px}
+.container{max-width:900px;margin:auto}
+.header,.card{background:white;padding:25px;border-radius:14px;margin-bottom:20px}
+.header{background:#315c4c;color:white}
+.item{padding:18px;background:#f7f7f7;border-radius:10px;margin-bottom:10px}
+.btn{display:inline-block;padding:10px 16px;background:#315c4c;color:white;text-decoration:none;border-radius:8px}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+<h1>📚 أقسام الاختبار</h1>
+<p>{{ exam.title }}</p>
+</div>
+
+<div class="card">
+<a class="btn" href="{% url 'exam_section_create' exam.id %}">➕ إضافة قسم</a>
+</div>
+
+<div class="card">
+{% if sections %}
+{% for section in sections %}
+<div class="item">
+<h3>{{ section.order }}. {{ section.title }}</h3>
+
+{% if section.description %}
+<p>{{ section.description }}</p>
+{% endif %}
+
+<p>
+{% if section.is_required %}
+✅ قسم إجباري
+{% else %}
+⭕ قسم اختياري
+{% endif %}
+</p>
+</div>
+{% endfor %}
+{% else %}
+<p>لا توجد أقسام لهذا الاختبار حتى الآن.</p>
+{% endif %}
+</div>
+
+</div>
+</body>
+</html>

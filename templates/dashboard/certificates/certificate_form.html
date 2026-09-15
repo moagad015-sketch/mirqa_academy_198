@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>إصدار شهادة - أكاديمية مِرقاة</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f4ed;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        h1 {
+            color: #24483b;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #24483b;
+            color: white;
+            border: none;
+            padding: 13px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        {% if certificate %}
+            ✏️ تعديل الشهادة
+        {% else %}
+            🏆 إصدار شهادة جديدة
+        {% endif %}
+    </h1>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">
+            💾 حفظ الشهادة
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

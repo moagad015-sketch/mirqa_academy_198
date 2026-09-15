@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+إضافة سؤال | أكاديمية مِرقاة
+</title>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f3ed;
+    margin: 0;
+    padding: 30px;
+    color: #222;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.header {
+    background: #315c4c;
+    color: white;
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+
+.field {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.btn {
+    display: inline-block;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #315c4c;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.btn-secondary {
+    background: #666;
+}
+
+.error {
+    color: #a00;
+    margin-top: 6px;
+}
+
+.note {
+    background: #f1eee5;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>➕ إضافة سؤال جديد</h1>
+
+<p>
+الاختبار:
+<strong>{{ exam.title }}</strong>
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="note">
+
+💡 اكتب السؤال هنا وسيتم حفظه تلقائيًا في
+<strong>بنك الأسئلة</strong>
+وإضافته مباشرة إلى هذا الاختبار.
+
+</div>
+
+
+<form method="post">
+
+{% csrf_token %}
+
+
+{% if form.non_field_errors %}
+
+<div class="error">
+
+{{ form.non_field_errors }}
+
+</div>
+
+{% endif %}
+
+
+{% for field in form %}
+
+<div class="field">
+
+<label for="{{ field.id_for_label }}">
+{{ field.label }}
+</label>
+
+{{ field }}
+
+{% if field.errors %}
+
+<div class="error">
+{{ field.errors }}
+</div>
+
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+
+<div class="actions">
+
+<button
+    type="submit"
+    class="btn">
+    💾 حفظ السؤال وإضافته للاختبار
+</button>
+
+
+<a
+    href="{% url 'exam_question_list' exam.id %}"
+    class="btn btn-secondary">
+
+↩️ العودة للأسئلة
+
+</a>
+
+</div>
+
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

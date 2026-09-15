@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>تسجيل معلم | أكاديمية مِرقاة</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f4ed;
+            color: #222;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        form p {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        input[type="file"] {
+            background: #fafafa;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #315c4c;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #315c4c;
+            text-decoration: none;
+        }
+
+        .errors {
+            background: #fff0f0;
+            color: #a00000;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .note {
+            background: #f4f7f5;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🌿 أكاديمية مِرقاة</h1>
+
+    <div class="subtitle">
+        طلب تسجيل معلم جديد
+    </div>
+
+    <div class="note">
+        سيتم مراجعة بيانات الطلب والتسجيل الصوتي من إدارة الأكاديمية
+        قبل اعتماد حساب المعلم.
+    </div>
+
+    {% if form.errors %}
+        <div class="errors">
+            يرجى مراجعة البيانات المدخلة.
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">
+            إرسال طلب التسجيل
+        </button>
+
+    </form>
+
+    <a href="{% url 'login' %}" class="back">
+        لديك حساب بالفعل؟ تسجيل الدخول
+    </a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>الشهادات - أكاديمية مِرقاة</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f4ed;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: #24483b;
+        }
+
+        .btn {
+            background: #24483b;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.08);
+        }
+
+        .valid {
+            color: green;
+            font-weight: bold;
+        }
+
+        .invalid {
+            color: #b3261e;
+            font-weight: bold;
+        }
+
+        .actions a {
+            text-decoration: none;
+            margin-left: 12px;
+        }
+
+        .edit {
+            color: #1d5c91;
+        }
+
+        .delete {
+            color: #b3261e;
+        }
+
+        .verify {
+            color: #24483b;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top">
+
+        <h1>🏆 الشهادات</h1>
+
+        <a href="{% url 'certificate_create' %}" class="btn">
+            ➕ إصدار شهادة
+        </a>
+
+    </div>
+
+    {% for certificate in certificates %}
+
+        <div class="card">
+
+            <h2>
+                {{ certificate.student_name|default:certificate.student.username }}
+            </h2>
+
+            <p>
+                📚 الدورة:
+                {{ certificate.course_name|default:certificate.course.title }}
+            </p>
+
+            <p>
+                🔢 رقم الشهادة:
+                <strong>{{ certificate.certificate_number }}</strong>
+            </p>
+
+            {% if certificate.grade %}
+                <p>
+                    ⭐ التقدير:
+                    {{ certificate.grade }}
+                </p>
+            {% endif %}
+
+            <p>
+                📅 تاريخ الإصدار:
+                {{ certificate.issued_at|date:"Y/m/d" }}
+            </p>
+
+            {% if certificate.is_valid %}
+                <p class="valid">✓ الشهادة سارية</p>
+            {% else %}
+                <p class="invalid">✕ الشهادة غير سارية</p>
+            {% endif %}
+
+            <div class="actions">
+
+                <a
+                    href="{% url 'certificate_edit' certificate.id %}"
+                    class="edit"
+                >
+                    ✏️ تعديل
+                </a>
+
+                <a
+                    href="{% url 'certificate_delete' certificate.id %}"
+                    class="delete"
+                >
+                    🗑️ حذف
+                </a>
+
+                <a
+                    href="{% url 'certificate_verify' certificate.certificate_number %}"
+                    class="verify"
+                    target="_blank"
+                >
+                    🔍 تحقق
+                </a>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <div class="card">
+            <p>لا توجد شهادات حتى الآن.</p>
+        </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

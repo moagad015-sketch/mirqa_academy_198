@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إضافة قسم | أكاديمية مِرقاة</title>
+<style>
+body{font-family:Arial;background:#f5f3ed;padding:30px}
+.container{max-width:800px;margin:auto}
+.card{background:white;padding:25px;border-radius:14px}
+.field{margin-bottom:18px}
+label{display:block;font-weight:bold;margin-bottom:7px}
+input,textarea{width:100%;box-sizing:border-box;padding:11px;border:1px solid #ccc;border-radius:8px}
+input[type=checkbox]{width:auto}
+.btn{padding:11px 18px;border:0;border-radius:8px;background:#315c4c;color:white;text-decoration:none;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="card">
+
+<h1>➕ إضافة قسم للاختبار</h1>
+<p>{{ exam.title }}</p>
+
+<form method="post">
+{% csrf_token %}
+
+{% for field in form %}
+<div class="field">
+<label>{{ field.label }}</label>
+{{ field }}
+{% if field.errors %}
+<div>{{ field.errors }}</div>
+{% endif %}
+</div>
+{% endfor %}
+
+<button class="btn" type="submit">💾 حفظ القسم</button>
+
+<a class="btn" href="{% url 'exam_section_list' exam.id %}">
+↩️ العودة
+</a>
+
+</form>
+
+</div>
+</div>
+</body>
+</html>

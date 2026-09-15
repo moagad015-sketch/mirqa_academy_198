@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>تعيين المعلم | أكاديمية مِرقاة</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f3ea;
+            color: #183c32;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 650px;
+            margin: 60px auto;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #b08b45;
+            margin-top: 5px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+
+        .student-box {
+            background: #f7f3ea;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .student-box strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+        }
+
+        .help {
+            color: #777;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #2f6655;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .back {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back a {
+            color: #2f6655;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .errorlist {
+            color: #a33;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="logo">
+            🌿 أكاديمية مِرقاة
+        </div>
+
+        <div class="subtitle">
+            Mirqā Academy
+        </div>
+
+        <h1>
+            👨‍🏫 تعيين المعلم للطالب
+        </h1>
+
+        <div class="student-box">
+            <strong>الطالب:</strong>
+
+            {{ student.user.get_full_name|default:student.user.username }}
+        </div>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            <label for="{{ form.teacher.id_for_label }}">
+                {{ form.teacher.label }}
+            </label>
+
+            {{ form.teacher }}
+
+            {{ form.teacher.errors }}
+
+            <div class="help">
+                تظهر هنا المعلمون الذين تمت الموافقة على حساباتهم فقط.
+            </div>
+
+            <button type="submit">
+                💾 حفظ تعيين المعلم
+            </button>
+
+        </form>
+
+        <div class="back">
+            <a href="{% url 'student_detail' student.id %}">
+                ← العودة إلى بيانات الطالب
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

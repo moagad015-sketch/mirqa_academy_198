@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<title>الاختبارات - أكاديمية مِرقاة</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f7f4ed;
+    margin:0;
+    padding:30px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+h1{
+    color:#24483b;
+}
+
+.btn{
+    background:#24483b;
+    color:white;
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:8px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    margin-bottom:15px;
+    border-radius:14px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.actions a{
+    text-decoration:none;
+    margin-left:12px;
+}
+
+.edit{
+    color:#1d5c91;
+}
+
+.delete{
+    color:#b3261e;
+}
+
+.questions{
+    color:#24483b;
+    font-weight:bold;
+}
+
+.status{
+    font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="top">
+
+<h1>📝 الاختبارات</h1>
+
+<a href="{% url 'exam_create' %}" class="btn">
+➕ إنشاء اختبار
+</a>
+
+</div>
+
+{% for exam in exams %}
+
+<div class="card">
+
+<h2>{{ exam.title }}</h2>
+
+<p>
+📚 الدورة:
+<strong>{{ exam.course.title }}</strong>
+</p>
+
+{% if exam.description %}
+<p>{{ exam.description }}</p>
+{% endif %}
+
+<p>
+❓ عدد الأسئلة:
+<strong>{{ exam.questions.count }}</strong>
+</p>
+
+<p>
+⏱️ المدة:
+{% if exam.duration_minutes %}
+{{ exam.duration_minutes }} دقيقة
+{% else %}
+غير محددة
+{% endif %}
+</p>
+
+<p>
+🎯 درجة النجاح:
+<strong>{{ exam.passing_score }}%</strong>
+</p>
+
+<p>
+🔁 عدد المحاولات:
+<strong>{{ exam.max_attempts }}</strong>
+</p>
+
+<p>
+📊 الحالة:
+<span class="status">
+{{ exam.get_status_display }}
+</span>
+</p>
+
+<div class="actions">
+
+<a href="{% url 'exam_edit' exam.id %}" class="edit">
+✏️ تعديل
+</a>
+
+<a href="{% url 'exam_delete' exam.id %}" class="delete">
+🗑️ حذف
+</a>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<div class="card">
+<p>لا توجد اختبارات حتى الآن.</p>
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>

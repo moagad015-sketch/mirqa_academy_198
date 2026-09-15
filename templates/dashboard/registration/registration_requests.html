@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>طلبات التسجيل | أكاديمية مِرقاة</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7f6;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .section h2 {
+            margin-top: 0;
+        }
+
+        .request {
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .info {
+            line-height: 1.8;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .details {
+            background: #1f6f5b;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+        }
+
+        .empty {
+            color: #777;
+            padding: 15px 0;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #1f6f5b;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="{% url 'admin_dashboard' %}" class="back">
+        ← العودة إلى لوحة المدير
+    </a>
+
+    <h1>📋 طلبات التسجيل</h1>
+
+    <!-- طلبات الطلاب -->
+    <div class="section">
+
+        <h2>👨‍🎓 طلبات تسجيل الطلاب</h2>
+
+        {% if pending_students %}
+
+            {% for profile in pending_students %}
+
+                <div class="request">
+
+                    <div class="info">
+
+                        <strong>
+                            {{ profile.user.get_full_name|default:profile.user.username }}
+                        </strong>
+
+                        <br>
+
+                        اسم المستخدم:
+                        {{ profile.user.username }}
+
+                        <br>
+
+                        البريد:
+                        {{ profile.user.email }}
+
+                        <br>
+
+                        تاريخ الطلب:
+                        {{ profile.created_at|date:"Y-m-d H:i" }}
+
+                    </div>
+
+                    <div class="buttons">
+
+                        <a
+                            href="{% url 'registration_request_detail' 'student' profile.id %}"
+                            class="details"
+                        >
+                            عرض التفاصيل
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+                لا توجد طلبات تسجيل طلاب جديدة حاليًا.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- طلبات المعلمين -->
+    <div class="section">
+
+        <h2>👨‍🏫 طلبات تسجيل المعلمين</h2>
+
+        {% if pending_teachers %}
+
+            {% for profile in pending_teachers %}
+
+                <div class="request">
+
+                    <div class="info">
+
+                        <strong>
+                            {{ profile.user.get_full_name|default:profile.user.username }}
+                        </strong>
+
+                        <br>
+
+                        اسم المستخدم:
+                        {{ profile.user.username }}
+
+                        <br>
+
+                        البريد:
+                        {{ profile.user.email }}
+
+                        <br>
+
+                        تاريخ الطلب:
+                        {{ profile.created_at|date:"Y-m-d H:i" }}
+
+                    </div>
+
+                    <div class="buttons">
+
+                        <a
+                            href="{% url 'registration_request_detail' 'teacher' profile.id %}"
+                            class="details"
+                        >
+                            عرض التفاصيل
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+                لا توجد طلبات تسجيل معلمين جديدة حاليًا.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

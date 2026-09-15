@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إضافة اختيار | أكاديمية مِرقاة</title>
+<style>
+body{font-family:Arial;background:#f5f3ed;margin:0;padding:30px;color:#222}
+.container{max-width:700px;margin:auto}
+.header,.card{background:white;padding:25px;border-radius:14px;margin-bottom:20px}
+.header{background:#315c4c;color:white}
+.field{margin-bottom:18px}
+label{display:block;font-weight:bold;margin-bottom:7px}
+input{width:100%;box-sizing:border-box;padding:11px;border:1px solid #ccc;border-radius:8px}
+input[type=checkbox]{width:auto}
+.btn{display:inline-block;padding:11px 18px;border:0;border-radius:8px;background:#315c4c;color:white;text-decoration:none;cursor:pointer}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>➕ إضافة اختيار</h1>
+<p>أكاديمية مِرقاة</p>
+</div>
+<div class="card">
+<form method="post">
+{% csrf_token %}
+{% for field in form %}
+<div class="field">
+<label>{{ field.label }}</label>
+{{ field }}
+{% if field.errors %}<div>{{ field.errors }}</div>{% endif %}
+</div>
+{% endfor %}
+<div class="actions">
+<button type="submit" class="btn">💾 حفظ الاختيار</button>
+<a href="{% url 'question_edit' question.id %}" class="btn">↩️ العودة للسؤال</a>
+</div>
+</form>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أسئلة الاختبار | أكاديمية مِرقاة</title>
+<style>
+body{font-family:Arial;background:#f5f3ed;padding:30px}
+.container{max-width:1000px;margin:auto}
+.header,.card{background:white;padding:25px;border-radius:14px;margin-bottom:20px}
+.header{background:#315c4c;color:white}
+.item{background:#f7f7f7;padding:18px;border-radius:10px;margin-bottom:12px}
+.btn{display:inline-block;padding:10px 16px;background:#315c4c;color:white;text-decoration:none;border-radius:8px}
+.danger{background:#9b2c2c}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+<h1>📝 أسئلة الاختبار</h1>
+<p>{{ exam.title }}</p>
+</div>
+
+<div class="card">
+<a class="btn" href="{% url 'exam_question_add' exam.id %}">
+➕ إضافة سؤال للاختبار
+</a>
+</div>
+
+<div class="card">
+
+{% if exam_questions %}
+
+{% for item in exam_questions %}
+
+<div class="item">
+
+<h3>{{ item.order }}. {{ item.question.text }}</h3>
+
+<p>
+الدرجة:
+{{ item.get_points }}
+</p>
+
+{% if item.section %}
+<p>📂 القسم: {{ item.section.title }}</p>
+{% endif %}
+
+<p>
+{% if item.is_required %}
+✅ إجباري
+{% else %}
+⭕ اختياري
+{% endif %}
+</p>
+
+<a class="btn danger"
+href="{% url 'exam_question_delete' item.id %}">
+🗑️ حذف
+</a>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<p>لا توجد أسئلة مضافة لهذا الاختبار حتى الآن.</p>
+
+{% endif %}
+
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>طلب التسجيل | أكاديمية مِرقاة</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            background: #f7f3ea;
+            color: #183c32;
+        }
+
+        .card {
+            width: 90%;
+            max-width: 520px;
+            background: white;
+            padding: 40px 25px;
+            border-radius: 22px;
+            text-align: center;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .icon {
+            font-size: 55px;
+        }
+
+        h1 {
+            margin: 15px 0;
+        }
+
+        p {
+            line-height: 2;
+            color: #555;
+        }
+
+        .status {
+            display: inline-block;
+            margin: 15px 0;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background: #fff4d6;
+            color: #8a681c;
+            font-weight: bold;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 13px 25px;
+            border-radius: 10px;
+            background: #2f6655;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="logo">
+        🌿 أكاديمية مِرقاة
+    </div>
+
+    <div class="icon">
+        ⏳
+    </div>
+
+    <h1>
+        تم استلام طلبك
+    </h1>
+
+    <div class="status">
+        قيد المراجعة
+    </div>
+
+    <p>
+        شكرًا لك على التسجيل في أكاديمية مِرقاة.
+    </p>
+
+    <p>
+        طلب تسجيل {{ user_type }} الخاص بك وصل إلى إدارة الأكاديمية،
+        وسيتم مراجعته قبل تفعيل الحساب.
+    </p>
+
+    <p>
+        يمكنك العودة إلى الصفحة الرئيسية الآن، وبعد الموافقة يمكنك تسجيل الدخول إلى حسابك.
+    </p>
+
+    <a href="{% url 'home' %}">
+        العودة إلى الصفحة الرئيسية
+    </a>
+
+</div>
+
+</body>
+</html>

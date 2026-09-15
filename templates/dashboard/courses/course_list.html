@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>الدورات | أكاديمية مِرقاة</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f4ed;
+            color: #183c2b;
+        }
+
+        .header {
+            background: #183c2b;
+            color: white;
+            padding: 25px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .container {
+            padding: 30px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .top h2 {
+            margin: 0 0 8px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .add {
+            background: #d7bd78;
+            color: #183c2b;
+        }
+
+        .back {
+            background: #183c2b;
+            color: white;
+        }
+
+        .courses {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+        }
+
+        .course {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .course-image {
+            height: 170px;
+            background: #e9e3d5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .course-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .no-image {
+            font-size: 45px;
+        }
+
+        .course-content {
+            padding: 20px;
+        }
+
+        .course-content h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .course-content p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .active {
+            background: #e1f1e7;
+            color: #23613e;
+        }
+
+        .inactive {
+            background: #f4dddd;
+            color: #8b3030;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .action {
+            display: inline-block;
+            text-decoration: none;
+            padding: 9px 13px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .lessons {
+            background: #183c2b;
+            color: white;
+        }
+
+        .edit {
+            background: #e8efe9;
+            color: #183c2b;
+        }
+
+        .delete {
+            background: #f3dddd;
+            color: #8b3030;
+        }
+
+        .empty {
+            background: white;
+            padding: 50px;
+            text-align: center;
+            border-radius: 18px;
+            color: #777;
+        }
+
+        @media (max-width: 700px) {
+
+            .container {
+                padding: 15px;
+            }
+
+            .top {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .action {
+                text-align: center;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+
+        <h1>🌿 أكاديمية مِرقاة</h1>
+
+        <p>إدارة الدورات التعليمية</p>
+
+    </header>
+
+
+    <main class="container">
+
+
+        <div class="top">
+
+            <div>
+
+                <h2>📚 الدورات</h2>
+
+                <p>
+                    إدارة الدورات والمحتوى التعليمي
+                </p>
+
+            </div>
+
+
+            <div class="buttons">
+
+                <a href="/dashboard/courses/add/"
+                   class="button add">
+
+                    ➕ إضافة دورة
+
+                </a>
+
+
+                <a href="/accounts/dashboard/admin/"
+                   class="button back">
+
+                    ← لوحة التحكم
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        {% if courses %}
+
+
+        <section class="courses">
+
+
+            {% for course in courses %}
+
+
+            <article class="course">
+
+
+                <div class="course-image">
+
+
+                    {% if course.image %}
+
+                    <img
+                        src="{{ course.image.url }}"
+                        alt="{{ course.title }}"
+                    >
+
+                    {% else %}
+
+                    <div class="no-image">
+                        📚
+                    </div>
+
+                    {% endif %}
+
+
+                </div>
+
+
+                <div class="course-content">
+
+
+                    {% if course.is_active %}
+
+                    <span class="status active">
+                        ● مفعّلة
+                    </span>
+
+                    {% else %}
+
+                    <span class="status inactive">
+                        ● غير مفعّلة
+                    </span>
+
+                    {% endif %}
+
+
+                    <h3>
+                        {{ course.title }}
+                    </h3>
+
+
+                    <p>
+
+                        {{ course.description|default:"لا يوجد وصف لهذه الدورة." }}
+
+                    </p>
+
+
+                    <div class="actions">
+
+
+                        <a
+                            href="/dashboard/courses/{{ course.id }}/lessons/"
+                            class="action lessons"
+                        >
+
+                            📖 الدروس
+
+                        </a>
+
+
+                        <a
+                            href="/dashboard/courses/edit/{{ course.id }}/"
+                            class="action edit"
+                        >
+
+                            ✏️ تعديل
+
+                        </a>
+
+
+                        <a
+                            href="/dashboard/courses/delete/{{ course.id }}/"
+                            class="action delete"
+                        >
+
+                            🗑️ حذف
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </article>
+
+
+            {% endfor %}
+
+
+        </section>
+
+
+        {% else %}
+
+
+        <div class="empty">
+
+            <div style="font-size: 50px;">
+                📚
+            </div>
+
+            <h2>
+                لا توجد دورات حتى الآن
+            </h2>
+
+            <p>
+                ابدأ بإضافة أول دورة تعليمية للأكاديمية.
+            </p>
+
+        </div>
+
+
+        {% endif %}
+
+
+    </main>
+
+
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>حذف الشهادة</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f4ed;
+            padding: 50px;
+        }
+
+        .box {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        button {
+            background: #b3261e;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        a {
+            margin-right: 15px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>🗑️ حذف الشهادة</h1>
+
+    <p>هل أنت متأكد أنك تريد حذف هذه الشهادة؟</p>
+
+    <h2>{{ certificate.certificate_number }}</h2>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <button type="submit">
+            نعم، احذف الشهادة
+        </button>
+
+        <a href="{% url 'certificate_list' %}">
+            إلغاء
+        </a>
+
+    </form>
+
+</div>
+
+</body>
+</html>

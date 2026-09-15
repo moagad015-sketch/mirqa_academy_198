@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>حذف الدرس | أكاديمية مِرقاة</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f4ed;
+            color: #183c2b;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,.06);
+        }
+
+        .icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        button,
+        a {
+            padding: 13px 22px;
+            border-radius: 10px;
+            border: none;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button {
+            background: #a33;
+            color: white;
+        }
+
+        a {
+            background: #183c2b;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 30px auto;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            button,
+            a {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="container">
+
+    <div class="card">
+
+        <div class="icon">⚠️</div>
+
+        <h1>حذف الدرس</h1>
+
+        <p>
+            هل أنت متأكد أنك تريد حذف:
+            <strong>{{ lesson.title }}</strong>؟
+        </p>
+
+        <p>
+            سيتم حذف الدرس نهائيًا.
+        </p>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="actions">
+
+                <button type="submit">
+                    🗑️ نعم، حذف الدرس
+                </button>
+
+                <a href="/dashboard/courses/{{ lesson.course.id }}/lessons/">
+                    إلغاء
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>بنك الأسئلة | أكاديمية مِرقاة</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f3ed;
+            margin: 0;
+            padding: 30px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 16px;
+            background: #315c4c;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.06);
+        }
+
+        .question {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .info {
+            color: #666;
+            line-height: 1.9;
+        }
+
+        .actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .edit {
+            background: #856404;
+        }
+
+        .delete {
+            background: #9b2c2c;
+        }
+
+        .empty {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top">
+
+        <h1>📚 بنك الأسئلة</h1>
+
+        <a class="btn" href="{% url 'question_create' %}">
+            ➕ إضافة سؤال
+        </a>
+
+    </div>
+
+
+    {% if questions %}
+
+        {% for question in questions %}
+
+            <div class="card">
+
+                <div class="question">
+                    ❓ {{ question.text }}
+                </div>
+
+                <div class="info">
+
+                    📚 الدورة:
+                    {% if question.course %}
+                        {{ question.course.title }}
+                    {% else %}
+                        غير محددة
+                    {% endif %}
+
+                    <br>
+
+                    📖 الدرس:
+                    {% if question.lesson %}
+                        {{ question.lesson.title }}
+                    {% else %}
+                        غير محدد
+                    {% endif %}
+
+                    <br>
+
+                    📝 النوع:
+                    {{ question.get_question_type_display }}
+
+                    <br>
+
+                    🎯 الصعوبة:
+                    {{ question.get_difficulty_display }}
+
+                    <br>
+
+                    ⭐ الدرجة:
+                    {{ question.points }}
+
+                    <br>
+
+                    🔢 عدد الاختيارات:
+                    {{ question.choices.count }}
+
+                </div>
+
+
+                <div class="actions">
+
+                    <a
+                        class="btn edit"
+                        href="{% url 'question_edit' question.id %}"
+                    >
+                        ✏️ تعديل وإدارة الاختيارات
+                    </a>
+
+                    <a
+                        class="btn delete"
+                        href="{% url 'question_delete' question.id %}"
+                    >
+                        🗑️ حذف
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+
+            <h2>لا توجد أسئلة حتى الآن</h2>
+
+            <p>
+                ابدأ بإضافة أول سؤال إلى بنك الأسئلة.
+            </p>
+
+            <a
+                class="btn"
+                href="{% url 'question_create' %}"
+            >
+                ➕ إضافة أول سؤال
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

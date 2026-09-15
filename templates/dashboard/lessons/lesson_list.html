@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>دروس الدورة | أكاديمية مِرقاة</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f4ed;
+            color: #183c2b;
+        }
+
+        .header {
+            background: #183c2b;
+            color: white;
+            padding: 25px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button {
+            padding: 12px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .add {
+            background: #d7bd78;
+            color: #183c2b;
+        }
+
+        .back {
+            background: #183c2b;
+            color: white;
+        }
+
+        .lesson {
+            background: white;
+            padding: 22px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, .05);
+        }
+
+        .lesson h3 {
+            margin-top: 0;
+        }
+
+        .lesson p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .edit,
+        .delete {
+            padding: 9px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .edit {
+            background: #e8efe9;
+            color: #183c2b;
+        }
+
+        .delete {
+            background: #f3dddd;
+            color: #8b3030;
+        }
+
+        .empty {
+            background: white;
+            padding: 50px;
+            text-align: center;
+            border-radius: 18px;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 15px;
+            }
+
+            .top {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <h1>🌿 أكاديمية مِرقاة</h1>
+    <p>إدارة دروس الدورة</p>
+</header>
+
+<main class="container">
+
+    <div class="top">
+
+        <div>
+            <h2>📚 {{ course.title }}</h2>
+            <p>إدارة الدروس والمحتوى التعليمي</p>
+        </div>
+
+        <div class="buttons">
+
+            <a href="/dashboard/courses/{{ course.id }}/lessons/add/"
+               class="button add">
+                ➕ إضافة درس
+            </a>
+
+            <a href="/dashboard/courses/"
+               class="button back">
+                ← الدورات
+            </a>
+
+        </div>
+
+    </div>
+
+    {% if lessons %}
+
+        {% for lesson in lessons %}
+
+        <article class="lesson">
+
+            <h3>
+                {{ lesson.order }}. {{ lesson.title }}
+            </h3>
+
+            <p>
+                {{ lesson.description|default:"لا يوجد وصف لهذا الدرس." }}
+            </p>
+
+            {% if lesson.video_url %}
+                <p>🎥 يوجد فيديو لهذا الدرس</p>
+            {% endif %}
+
+            {% if lesson.file %}
+                <p>📁 يوجد ملف مرفق</p>
+            {% endif %}
+
+            <div class="actions">
+
+                <a href="/dashboard/lessons/{{ lesson.id }}/edit/"
+                   class="edit">
+                    ✏️ تعديل
+                </a>
+
+                <a href="/dashboard/lessons/{{ lesson.id }}/delete/"
+                   class="delete">
+                    🗑️ حذف
+                </a>
+
+            </div>
+
+        </article>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+            <div style="font-size:50px;">📖</div>
+            <h2>لا توجد دروس حتى الآن</h2>
+            <p>ابدأ بإضافة أول درس لهذه الدورة.</p>
+        </div>
+
+    {% endif %}
+
+</main>
+
+</body>
+</html>

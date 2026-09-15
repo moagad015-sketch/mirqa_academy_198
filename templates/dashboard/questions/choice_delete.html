@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حذف الاختيار | أكاديمية مِرقاة</title>
+<style>
+body{font-family:Arial;background:#f5f3ed;padding:30px}
+.container{max-width:650px;margin:auto}
+.card{background:white;padding:25px;border-radius:14px}
+.btn{padding:11px 18px;border:0;border-radius:8px;color:white;text-decoration:none;cursor:pointer}
+.danger{background:#9b2c2c}
+.back{background:#666}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="card">
+<h1>🗑️ حذف الاختيار</h1>
+<p>هل أنت متأكد من حذف هذا الاختيار؟</p>
+
+<div>
+<strong>{{ choice.text }}</strong>
+</div>
+
+<form method="post">
+{% csrf_token %}
+<br>
+<button class="btn danger" type="submit">🗑️ نعم، حذف</button>
+<a class="btn back" href="{% url 'question_edit' choice.question.id %}">إلغاء</a>
+</form>
+</div>
+</div>
+</body>
+</html>

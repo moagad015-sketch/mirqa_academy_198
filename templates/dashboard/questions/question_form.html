@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% if question %}
+            تعديل السؤال | أكاديمية مِرقاة
+        {% else %}
+            إضافة سؤال | أكاديمية مِرقاة
+        {% endif %}
+    </title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f3ed;
+            margin: 0;
+            padding: 30px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .header {
+            background: #315c4c;
+            color: white;
+            padding: 22px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.06);
+        }
+
+        h1,
+        h2 {
+            margin-top: 0;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+        }
+
+        .checkbox-field {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-field label {
+            margin: 0;
+        }
+
+        .error {
+            color: #a00;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 18px;
+            border: none;
+            border-radius: 8px;
+            background: #315c4c;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .btn-secondary {
+            background: #666;
+        }
+
+        .btn-danger {
+            background: #9b2c2c;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .choice {
+            background: #f7f7f7;
+            border: 1px solid #ddd;
+            padding: 14px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .choice-correct {
+            border-right: 5px solid #315c4c;
+        }
+
+        .choice-actions {
+            margin-top: 10px;
+        }
+
+        .empty {
+            color: #777;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .note {
+            background: #f1eee5;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <div class="header">
+
+        <h1>
+
+            {% if question %}
+                ✏️ تعديل السؤال
+            {% else %}
+                ➕ إضافة سؤال جديد
+            {% endif %}
+
+        </h1>
+
+        <p>
+            بنك الأسئلة — أكاديمية مِرقاة
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="note">
+
+            💡 يمكنك إنشاء السؤال أولًا، ثم إضافة الاختيارات الخاصة به من نفس الصفحة.
+
+        </div>
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+
+            {% for field in form %}
+
+                {% if field.name == "is_active" or field.name == "allow_random" %}
+
+                    <div class="field checkbox-field">
+
+                        {{ field }}
+
+                        <label for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                        </label>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="field">
+
+                        <label for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.errors %}
+
+                            <div class="error">
+                                {{ field.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+
+            <div class="actions">
+
+                <button
+                    type="submit"
+                    class="btn"
+                >
+                    💾 حفظ السؤال
+                </button>
+
+
+                <a
+                    href="{% url 'question_list' %}"
+                    class="btn btn-secondary"
+                >
+                    ↩️ العودة إلى بنك الأسئلة
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    {% if question %}
+
+        <div class="card">
+
+            <h2>📝 اختيارات السؤال</h2>
+
+            <p>
+                أضف الاختيارات وحدد الإجابة الصحيحة.
+            </p>
+
+
+            {% if choices %}
+
+                {% for choice in choices %}
+
+                    <div
+                        class="choice
+                        {% if choice.is_correct %}
+                            choice-correct
+                        {% endif %}"
+                    >
+
+                        <strong>
+                            {{ forloop.counter }}.
+                            {{ choice.text }}
+                        </strong>
+
+
+                        {% if choice.is_correct %}
+
+                            <div>
+                                ✅ الإجابة الصحيحة
+                            </div>
+
+                        {% else %}
+
+                            <div>
+                                ❌ إجابة غير صحيحة
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="choice-actions">
+
+                            <a
+                                href="{% url 'choice_delete' choice.id %}"
+                                class="btn btn-danger"
+                            >
+                                🗑️ حذف الاختيار
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="empty">
+
+                    لا توجد اختيارات لهذا السؤال حتى الآن.
+
+                </div>
+
+            {% endif %}
+
+
+            <div class="actions">
+
+                <a
+                    href="{% url 'choice_create' question.id %}"
+                    class="btn"
+                >
+                    ➕ إضافة اختيار
+                </a>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+</div>
+
+</body>
+
+</html>

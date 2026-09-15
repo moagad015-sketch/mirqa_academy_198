@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+اختبارات أكاديمية مِرقاة
+</title>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f3ed;
+    margin: 0;
+    padding: 30px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.header {
+    background: #315c4c;
+    color: white;
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+
+.card h2 {
+    color: #315c4c;
+}
+
+.info {
+    color: #666;
+    margin: 8px 0;
+}
+
+.btn {
+    display: inline-block;
+    padding: 11px 18px;
+    background: #315c4c;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.empty {
+    background: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>📝 الاختبارات</h1>
+
+<p>
+أكاديمية مِرقاة
+</p>
+
+</div>
+
+
+{% if exams %}
+
+{% for exam in exams %}
+
+<div class="card">
+
+<h2>
+{{ exam.title }}
+</h2>
+
+
+<div class="info">
+
+📚 الدورة:
+{{ exam.course.title }}
+
+</div>
+
+
+<div class="info">
+
+📝 عدد الأسئلة:
+{{ exam.exam_questions.count }}
+
+</div>
+
+
+{% if exam.duration_minutes %}
+
+<div class="info">
+
+⏱️ مدة الاختبار:
+{{ exam.duration_minutes }} دقيقة
+
+</div>
+
+{% endif %}
+
+
+<div class="info">
+
+🎯 درجة النجاح:
+{{ exam.passing_score }}%
+
+</div>
+
+
+<a
+    class="btn"
+    href="#">
+
+🚀 بدء الاختبار
+
+</a>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<div class="empty">
+
+<h2>
+لا توجد اختبارات متاحة حاليًا
+</h2>
+
+<p>
+سيظهر هنا أي اختبار يتم نشره من إدارة الأكاديمية.
+</p>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% if lesson %}تعديل الدرس{% else %}إضافة درس{% endif %}
+        | أكاديمية مِرقاة
+    </title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f4ed;
+            color: #183c2b;
+        }
+
+        .header {
+            background: #183c2b;
+            color: white;
+            padding: 25px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.05);
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        button,
+        .cancel {
+            padding: 13px 22px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button {
+            background: #d7bd78;
+            color: #183c2b;
+        }
+
+        .cancel {
+            background: #183c2b;
+            color: white;
+        }
+
+        .error {
+            color: #a33;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            button,
+            .cancel {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <h1>🌿 أكاديمية مِرقاة</h1>
+    <p>
+        {% if lesson %}تعديل الدرس{% else %}إضافة درس{% endif %}
+    </p>
+</header>
+
+<main class="container">
+
+    <div class="card">
+
+        <h2>
+            {% if lesson %}
+                ✏️ تعديل الدرس
+            {% else %}
+                ➕ إضافة درس جديد
+            {% endif %}
+        </h2>
+
+        <p>
+            الدورة:
+            <strong>{{ course.title }}</strong>
+        </p>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            {% for field in form %}
+
+            <div class="field">
+
+                {{ field.label_tag }}
+
+                {{ field }}
+
+                {% for error in field.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+
+            </div>
+
+            {% endfor %}
+
+            <div class="actions">
+
+                <button type="submit">
+                    💾 حفظ الدرس
+                </button>
+
+                <a href="/dashboard/courses/{{ course.id }}/lessons/"
+                   class="cancel">
+                    إلغاء
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>

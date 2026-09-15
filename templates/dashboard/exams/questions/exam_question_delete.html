@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حذف سؤال | أكاديمية مِرقاة</title>
+<style>
+body{font-family:Arial;background:#f5f3ed;padding:30px}
+.container{max-width:700px;margin:auto}
+.card{background:white;padding:25px;border-radius:14px}
+.question{background:#f7f7f7;padding:18px;border-radius:10px;margin:20px 0}
+.btn{padding:11px 18px;border:0;border-radius:8px;color:white;text-decoration:none;cursor:pointer}
+.danger{background:#9b2c2c}
+.back{background:#666}
+</style>
+</head>
+<body>
+
+<div class="container">
+<div class="card">
+
+<h1>🗑️ حذف سؤال من الاختبار</h1>
+
+<p>هل أنت متأكد أنك تريد إزالة هذا السؤال من الاختبار؟</p>
+
+<div class="question">
+<strong>{{ exam_question.question.text }}</strong>
+</div>
+
+<form method="post">
+{% csrf_token %}
+
+<button class="btn danger" type="submit">
+🗑️ نعم، حذف
+</button>
+
+<a class="btn back"
+href="{% url 'exam_question_list' exam_question.exam.id %}">
+إلغاء
+</a>
+
+</form>
+
+</div>
+</div>
+
+</body>
+</html>

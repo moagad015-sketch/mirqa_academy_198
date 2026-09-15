@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>حذف السؤال | أكاديمية مِرقاة</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f3ed;
+            margin: 0;
+            padding: 30px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .header {
+            background: #315c4c;
+            color: white;
+            padding: 22px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.06);
+        }
+
+        .warning {
+            background: #fff4e5;
+            border-right: 5px solid #d97706;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .question {
+            background: #f7f7f7;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 18px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .btn-danger {
+            background: #9b2c2c;
+        }
+
+        .btn-secondary {
+            background: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>🗑️ حذف السؤال</h1>
+        <p>بنك الأسئلة — أكاديمية مِرقاة</p>
+    </div>
+
+    <div class="card">
+
+        <div class="warning">
+            ⚠️ هل أنت متأكد أنك تريد حذف هذا السؤال؟
+            <br>
+            سيتم حذف السؤال نهائيًا، ولا يمكن التراجع عن هذه العملية.
+        </div>
+
+        <div class="question">
+            <strong>نص السؤال:</strong>
+            <br>
+            {{ question.text }}
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="actions">
+                <button type="submit" class="btn btn-danger">
+                    🗑️ نعم، حذف السؤال
+                </button>
+
+                <a href="{% url 'question_list' %}" class="btn btn-secondary">
+                    ↩️ إلغاء والعودة
+                </a>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

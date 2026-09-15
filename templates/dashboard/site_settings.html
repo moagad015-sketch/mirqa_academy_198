@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>إعدادات الأكاديمية | أكاديمية مِرقاة</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f4ed;
+            color: #183c2b;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: #183c2b;
+            color: white;
+            padding: 25px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #d7bd78;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+        }
+
+        .save {
+            background: #183c2b;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .save:hover {
+            opacity: 0.9;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #183c2b;
+            font-weight: bold;
+        }
+
+        .errorlist {
+            color: #b00020;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>⚙️ إعدادات أكاديمية مِرقاة</h1>
+
+        <p>
+            تعديل بيانات الأكاديمية ومعلومات التواصل
+        </p>
+
+    </div>
+
+
+    <div class="box">
+
+        <form method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            {% for field in form %}
+
+                <div class="field">
+
+                    {{ field.label_tag }}
+
+                    {{ field }}
+
+                    {{ field.errors }}
+
+                </div>
+
+            {% endfor %}
+
+
+            <button type="submit" class="save">
+                💾 حفظ الإعدادات
+            </button>
+
+        </form>
+
+
+        <a href="{% url 'admin_dashboard' %}" class="back">
+            ← العودة إلى لوحة التحكم
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>إضافة دورة | أكاديمية مِرقاة</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f4ed;
+            color: #183c2b;
+        }
+
+        .header {
+            background: #183c2b;
+            color: white;
+            padding: 25px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .field {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="file"] {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox input {
+            width: 18px;
+            height: 18px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .button {
+            border: none;
+            padding: 13px 22px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .save {
+            background: #d7bd78;
+            color: #183c2b;
+        }
+
+        .cancel {
+            background: #183c2b;
+            color: white;
+        }
+
+        .error {
+            color: #a33;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <h1>🌿 أكاديمية مِرقاة</h1>
+        <p>إضافة دورة تعليمية</p>
+    </header>
+
+    <main class="container">
+
+        <div class="card">
+
+            <h2>📚 إضافة دورة جديدة</h2>
+
+            <p>
+                أضف بيانات الدورة التعليمية التي ستظهر داخل الأكاديمية.
+            </p>
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                {% for field in form %}
+
+                <div class="field">
+
+                    {{ field.label_tag }}
+
+                    {{ field }}
+
+                    {% if field.errors %}
+                    {% for error in field.errors %}
+                    <div class="error">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+
+                </div>
+
+                {% endfor %}
+
+                <div class="actions">
+
+                    <button type="submit" class="button save">
+                        💾 حفظ الدورة
+                    </button>
+
+                    <a href="/dashboard/courses/" class="button cancel">
+                        إلغاء
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

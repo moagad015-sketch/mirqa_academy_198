@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>بيانات الطالب | أكاديمية مِرقاة</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f3ea;
+            color: #183c32;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: #b08b45;
+            margin-top: 5px;
+        }
+
+        h1 {
+            margin-top: 25px;
+            font-size: 25px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .info {
+            background: #f7f3ea;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .info strong {
+            display: block;
+            margin-bottom: 7px;
+            color: #2f6655;
+        }
+
+        .teacher-box {
+            background: #eef6f1;
+            padding: 20px;
+            border-radius: 14px;
+            margin-top: 25px;
+        }
+
+        .teacher-box h2 {
+            margin-top: 0;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            background: #2f6655;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #245343;
+        }
+
+        .back {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .back a {
+            color: #2f6655;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 650px) {
+
+            .container {
+                margin: 20px auto;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="header">
+
+            <div class="logo">
+                🌿 أكاديمية مِرقاة
+            </div>
+
+            <div class="subtitle">
+                Mirqā Academy
+            </div>
+
+            <h1>
+                بيانات الطالب
+            </h1>
+
+        </div>
+
+
+        <div class="info-grid">
+
+            <div class="info">
+                <strong>👤 الاسم</strong>
+                {{ student.user.get_full_name|default:student.user.username }}
+            </div>
+
+            <div class="info">
+                <strong>📧 اسم المستخدم</strong>
+                {{ student.user.username }}
+            </div>
+
+            <div class="info">
+                <strong>📱 رقم الهاتف</strong>
+                {{ student.phone|default:"غير مسجل" }}
+            </div>
+
+            <div class="info">
+                <strong>🎂 العمر</strong>
+                {{ student.age|default:"غير مسجل" }}
+            </div>
+
+            <div class="info">
+                <strong>🎓 المرحلة الدراسية</strong>
+                {{ student.study_stage|default:"غير مسجل" }}
+            </div>
+
+            <div class="info">
+                <strong>📚 التخصص</strong>
+                {{ student.specialization|default:"غير مسجل" }}
+            </div>
+
+            <div class="info">
+                <strong>📖 المستوى الحالي</strong>
+                {{ student.current_level|default:"غير مسجل" }}
+            </div>
+
+            <div class="info">
+                <strong>🕌 مقدار حفظ القرآن</strong>
+                {{ student.quran_memorization|default:"غير مسجل" }}
+            </div>
+
+            <div class="info">
+                <strong>📅 الأيام المتاحة</strong>
+                {{ student.available_days|default:"غير مسجل" }}
+            </div>
+
+            <div class="info">
+                <strong>🕐 المواعيد المتاحة</strong>
+                {{ student.available_times|default:"غير مسجل" }}
+            </div>
+
+            <div class="info">
+                <strong>⏱️ مدة الحلقة المفضلة</strong>
+
+                {% if student.preferred_lesson_duration %}
+                    {{ student.preferred_lesson_duration }} دقيقة
+                {% else %}
+                    غير محددة
+                {% endif %}
+
+            </div>
+
+            <div class="info">
+                <strong>📌 حالة الطالب</strong>
+                {{ student.get_status_display }}
+            </div>
+
+        </div>
+
+
+        <div class="teacher-box">
+
+            <h2>👨‍🏫 المعلم المسؤول</h2>
+
+            {% if student.teacher %}
+
+                <p>
+                    <strong>
+                        {{ student.teacher.user.get_full_name|default:student.teacher.user.username }}
+                    </strong>
+                </p>
+
+                <p>
+                    يمكن تغيير المعلم المسؤول عن الطالب من خلال الزر التالي.
+                </p>
+
+            {% else %}
+
+                <p>
+                    لم يتم تعيين معلم لهذا الطالب حتى الآن.
+                </p>
+
+            {% endif %}
+
+
+            <a
+                href="{% url 'assign_student_teacher' student.id %}"
+                class="button"
+            >
+                👨‍🏫
+                {% if student.teacher %}
+                    تغيير المعلم
+                {% else %}
+                    تعيين المعلم
+                {% endif %}
+            </a>
+
+        </div>
+
+
+        <div class="back">
+
+            <a href="{% url 'student_list' %}">
+                ← العودة إلى قائمة الطلاب
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

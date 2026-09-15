@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>أكاديمية مِرقاة | Mirqā Academy</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+            background: #f8f6f0;
+            color: #18352b;
+            line-height: 1.8;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #245844;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #9a7b45;
+            direction: ltr;
+            text-align: right;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #18352b;
+            font-weight: 600;
+            padding: 6px 4px;
+        }
+
+        nav a:hover {
+            color: #9a7b45;
+        }
+
+        .hero {
+            min-height: 650px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 20px;
+            background:
+                radial-gradient(circle at top right, #e9e1cd 0, transparent 35%),
+                linear-gradient(135deg, #f8f6f0, #eef3ed);
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e6eee9;
+            color: #245844;
+            padding: 8px 18px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 7vw, 75px);
+            margin-bottom: 15px;
+            color: #173d2d;
+        }
+
+        .hero h2 {
+            font-size: clamp(22px, 4vw, 34px);
+            color: #9a7b45;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: auto;
+            font-size: 19px;
+            color: #52645c;
+        }
+
+        .buttons {
+            margin-top: 35px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 7px;
+            transition: 0.2s;
+        }
+
+        .primary {
+            background: #245844;
+            color: white;
+        }
+
+        .secondary {
+            border: 1px solid #9a7b45;
+            color: #765d32;
+            background: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        section {
+            padding: 80px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 34px;
+            color: #173d2d;
+        }
+
+        .section-title p {
+            color: #68766f;
+            margin-top: 8px;
+        }
+
+        .services,
+        .courses-grid,
+        .exams-grid,
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px 22px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            border: 1px solid #eeeae0;
+        }
+
+        .icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #245844;
+        }
+
+        .card p {
+            color: #68766f;
+        }
+
+        /* =========================
+           الكورسات
+        ========================= */
+
+        .course-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.06);
+            border: 1px solid #eeeae0;
+            transition: 0.2s;
+        }
+
+        .course-card:hover,
+        .exam-card:hover,
+        .certificate-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .course-placeholder {
+            height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e6eee9;
+            font-size: 55px;
+        }
+
+        .course-content {
+            padding: 24px;
+        }
+
+        .course-content h3 {
+            color: #245844;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        .course-content p {
+            color: #68766f;
+            font-size: 15px;
+        }
+
+        /* =========================
+           الاختبارات
+        ========================= */
+
+        .exam-card {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            border: 1px solid #eeeae0;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+
+        .exam-icon {
+            font-size: 45px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .exam-card h3 {
+            color: #245844;
+            margin-bottom: 10px;
+            font-size: 21px;
+        }
+
+        .exam-card p {
+            color: #68766f;
+            margin: 6px 0;
+        }
+
+        .exam-info {
+            background: #f7f3e9;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
+            color: #765d32;
+        }
+
+        .exam-status {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: #e6eee9;
+            color: #245844;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           الشهادات
+        ========================= */
+
+        .certificate-card {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            border: 1px solid #eeeae0;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .certificate-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .certificate-card h3 {
+            color: #245844;
+            margin-bottom: 8px;
+        }
+
+        .certificate-card p {
+            color: #68766f;
+            margin: 5px 0;
+        }
+
+        .certificate-number {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 7px 13px;
+            background: #f3eee3;
+            color: #765d32;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .verify-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 9px 18px;
+            border-radius: 8px;
+            background: #245844;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #68766f;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #eeeae0;
+        }
+
+        .quote {
+            background: #173d2d;
+            color: white;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .quote p {
+            font-size: 25px;
+            max-width: 850px;
+            margin: auto;
+        }
+
+        footer {
+            background: #10291f;
+            color: #dce7e1;
+            padding: 45px 7%;
+            text-align: center;
+        }
+
+        footer h3 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .contact {
+            margin-top: 15px;
+            line-height: 2;
+        }
+
+        .contact a,
+        .social-links a {
+            color: #dce7e1;
+            text-decoration: none;
+        }
+
+        .contact a:hover,
+        .social-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .social-links {
+            margin-top: 25px;
+            line-height: 2.4;
+        }
+
+        @media (max-width: 900px) {
+
+            header {
+                flex-direction: column;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            nav a {
+                font-size: 14px;
+            }
+
+            .hero {
+                min-height: 570px;
+            }
+
+            section {
+                padding: 60px 5%;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        أكاديمية مِرقاة
+        <span>Mirqā Academy</span>
+    </div>
+
+    <nav>
+
+        <a href="{% url 'home' %}">الرئيسية</a>
+
+        <a href="#services">خدماتنا</a>
+
+        <a href="#courses">الكورسات</a>
+
+        <a href="#exams">الاختبارات</a>
+
+        <a href="#certificates">الشهادات</a>
+
+        <a href="#about">عن الأكاديمية</a>
+
+        <a href="#contact">تواصل معنا</a>
+
+        <a href="{% url 'login' %}">🔐 دخول</a>
+
+        <a href="{% url 'student_register' %}">👨‍🎓 طالب</a>
+
+        <a href="{% url 'teacher_register' %}">👨‍🏫 معلم</a>
+
+    </nav>
+
+</header>
+
+
+<!-- =========================
+     الرئيسية
+========================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            🌿 تعليم القرآن والتجويد — نور البيان
+        </div>
+
+        <h1>أكاديمية مِرقاة</h1>
+
+        <h2>نرتقي بالعلم، درجةً بعد درجة.</h2>
+
+        <p>
+            رحلة تعليمية متكاملة في القرآن الكريم والتجويد ونور البيان،
+            مع معلمين ومعلمات، وبيئة تعليمية تساعدك على التقدم بثبات.
+        </p>
+
+        <div class="buttons">
+
+            <a class="btn primary" href="#services">
+                اكتشف خدماتنا
+            </a>
+
+            <a class="btn secondary" href="#courses">
+                استعرض الكورسات
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     الخدمات
+========================= -->
+
+<section id="services">
+
+    <div class="section-title">
+
+        <h2>خدمات الأكاديمية</h2>
+
+        <p>
+            اختر المجال المناسب لك وابدأ رحلتك.
+        </p>
+
+    </div>
+
+
+    <div class="services">
+
+        <div class="card">
+
+            <div class="icon">📖</div>
+
+            <h3>حفظ القرآن الكريم</h3>
+
+            <p>
+                برنامج يساعد الطالب على الحفظ والمراجعة
+                بصورة منظمة ومتدرجة.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">📚</div>
+
+            <h3>التجويد وتصحيح التلاوة</h3>
+
+            <p>
+                تعلم أحكام التجويد وتصحيح التلاوة
+                مع متابعة مستمرة.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">🌱</div>
+
+            <h3>نور البيان</h3>
+
+            <p>
+                تعليم القراءة بطريقة مبسطة ومناسبة
+                للمبتدئين.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">🎓</div>
+
+            <h3>تحفيظ المتون</h3>
+
+            <p>
+                تحفيظ المتون العلمية مع دراسة أحكام
+                التجويد المتعلقة بها.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     الكورسات الديناميكية
+========================= -->
+
+<section id="courses">
+
+    <div class="section-title">
+
+        <h2>📚 الكورسات المتاحة</h2>
+
+        <p>
+            أحدث الدورات المتاحة في أكاديمية مِرقاة.
+        </p>
+
+    </div>
+
+
+    {% if courses %}
+
+        <div class="courses-grid">
+
+            {% for course in courses %}
+
+                <div class="course-card">
+
+                    {% if course.image %}
+
+                        <img
+                            src="{{ course.image.url }}"
+                            alt="{{ course.title }}"
+                            class="course-image"
+                        >
+
+                    {% else %}
+
+                        <div class="course-placeholder">
+                            📚
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="course-content">
+
+                        <h3>
+                            {{ course.title }}
+                        </h3>
+
+                        {% if course.description %}
+
+                            <p>
+                                {{ course.description }}
+                            </p>
+
+                        {% else %}
+
+                            <p>
+                                دورة تعليمية من أكاديمية مِرقاة.
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-message">
+            لا توجد كورسات متاحة حاليًا، تابعنا لمعرفة الكورسات الجديدة.
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+<!-- =========================
+     الاختبارات الديناميكية
+========================= -->
+
+<section id="exams">
+
+    <div class="section-title">
+
+        <h2>📝 الاختبارات المتاحة</h2>
+
+        <p>
+            اختبارات الدورات المنشورة في أكاديمية مِرقاة.
+        </p>
+
+    </div>
+
+
+    {% if exams %}
+
+        <div class="exams-grid">
+
+            {% for exam in exams %}
+
+                <div class="exam-card">
+
+                    <div class="exam-icon">
+                        📝
+                    </div>
+
+                    <h3>
+                        {{ exam.title }}
+                    </h3>
+
+                    {% if exam.description %}
+
+                        <p>
+                            {{ exam.description }}
+                        </p>
+
+                    {% endif %}
+
+
+                    <p>
+                        <strong>الكورس:</strong>
+                        {{ exam.course.title }}
+                    </p>
+
+
+                    {% if exam.duration_minutes %}
+
+                        <div class="exam-info">
+                            ⏱️ مدة الاختبار:
+                            {{ exam.duration_minutes }}
+                            دقيقة
+                        </div>
+
+                    {% endif %}
+
+
+                    <p>
+                        <strong>درجة النجاح:</strong>
+                        {{ exam.passing_score }}%
+                    </p>
+
+
+                    <span class="exam-status">
+
+                        {% if exam.status == "open" %}
+                            🟢 مفتوح الآن
+                        {% else %}
+                            📢 منشور
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-message">
+            لا توجد اختبارات متاحة حاليًا.
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+<!-- =========================
+     الشهادات الديناميكية
+========================= -->
+
+<section id="certificates">
+
+    <div class="section-title">
+
+        <h2>🎓 الشهادات</h2>
+
+        <p>
+            أحدث الشهادات الصادرة عن أكاديمية مِرقاة.
+        </p>
+
+    </div>
+
+
+    {% if certificates %}
+
+        <div class="certificates-grid">
+
+            {% for certificate in certificates %}
+
+                <div class="certificate-card">
+
+                    <div class="certificate-icon">
+                        🎓
+                    </div>
+
+                    <h3>
+                        {{ certificate.student_name|default:certificate.student.username }}
+                    </h3>
+
+
+                    <p>
+                        <strong>الكورس:</strong>
+                        {{ certificate.course_name|default:certificate.course.title }}
+                    </p>
+
+
+                    {% if certificate.grade %}
+
+                        <p>
+                            <strong>التقدير:</strong>
+                            {{ certificate.grade }}
+                        </p>
+
+                    {% endif %}
+
+
+                    <div class="certificate-number">
+
+                        رقم الشهادة:
+                        {{ certificate.certificate_number }}
+
+                    </div>
+
+
+                    <br>
+
+
+                    <a
+                        class="verify-btn"
+                        href="{% url 'certificate_verify' certificate.certificate_number %}"
+                    >
+                        التحقق من الشهادة
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-message">
+            لا توجد شهادات منشورة حاليًا.
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+<!-- =========================
+     عن الأكاديمية
+========================= -->
+
+<section id="about">
+
+    <div class="section-title">
+
+        <h2>
+            عن أكاديمية مِرقاة
+        </h2>
+
+        <p>
+            نسعى إلى تقديم تعليم قرآني منظم يجمع بين
+            جودة التعليم، والمتابعة، والتدرج في طلب العلم.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     الآية
+========================= -->
+
+<div class="quote">
+
+    <p>
+        ﴿وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِنْ مُدَّكِرٍ﴾
+    </p>
+
+</div>
+
+
+<!-- =========================
+     الفوتر والتواصل
+========================= -->
+
+<footer id="contact">
+
+    <h3>
+        أكاديمية مِرقاة 🌿📖
+    </h3>
+
+    <p>
+        تعليم القرآن والتجويد — نور البيان
+    </p>
+
+
+    <div class="contact">
+
+        📱
+        <a
+            href="https://wa.me/201040365668"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            01040365668
+        </a>
+
+        <br>
+
+
+        📱
+        <a
+            href="https://wa.me/201285182041"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            01285182041
+        </a>
+
+        <br>
+
+
+        ✉️
+        <a href="mailto:mirqahacademy@gmail.com">
+            mirqahacademy@gmail.com
+        </a>
+
+    </div>
+
+
+    <div class="social-links">
+
+        📘
+        <a
+            href="https://www.facebook.com/share/1DJpiZwMFT/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Facebook
+        </a>
+
+        <br>
+
+
+        📸
+        <a
+            href="https://www.instagram.com/mirqahacademy"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Instagram
+        </a>
+
+        <br>
+
+
+        ▶️
+        <a
+            href="https://youtube.com/channel/UCR7ULwjTp7eEO1EPAtNyOaw"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            YouTube
+        </a>
+
+        <br>
+
+
+        🎵
+        <a
+            href="https://www.tiktok.com/@mirqahacademy"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            TikTok
+        </a>
+
+    </div>
+
+
+    <p style="margin-top:20px;">
+
+        🌿 أكاديمية مِرقاة
+        <br>
+
+        نرتقي بالعلم، درجةً بعد درجة. 📖✨
+
+    </p>
+
+
+    <p style="margin-top:10px; font-size:14px;">
+
+        نسعد بمتابعتكم ودعمكم لنا على جميع منصاتنا،
+        ونسأل الله أن يجعل هذه الأكاديمية بابًا
+        لنشر كتابه وتعليم العلم النافع. 🤍
+
+    </p>
+
+
+    <p style=

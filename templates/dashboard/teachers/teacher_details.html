@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>تفاصيل المعلم | أكاديمية مِرقاة</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f4ed;
+            color: #183c2b;
+        }
+
+        .header {
+            background: #183c2b;
+            color: white;
+            padding: 25px 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.06);
+        }
+
+        .info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .item {
+            background: #f7f4ed;
+            padding: 18px;
+            border-radius: 12px;
+        }
+
+        .label {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .value {
+            font-weight: bold;
+            line-height: 1.7;
+        }
+
+        .bio {
+            background: #f7f4ed;
+            padding: 18px;
+            border-radius: 12px;
+            line-height: 1.9;
+        }
+
+        .back {
+            display: inline-block;
+            text-decoration: none;
+            background: #183c2b;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 650px) {
+
+            .info {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <h1>🌿 أكاديمية مِرقاة</h1>
+
+    <p>
+        تفاصيل المعلم
+    </p>
+
+</header>
+
+
+<main class="container">
+
+
+    <div class="card">
+
+        <h2>👨‍🏫 بيانات الحساب</h2>
+
+        <div class="info">
+
+            <div class="item">
+
+                <div class="label">
+                    اسم المستخدم
+                </div>
+
+                <div class="value">
+                    {{ teacher.username }}
+                </div>
+
+            </div>
+
+
+            <div class="item">
+
+                <div class="label">
+                    البريد الإلكتروني
+                </div>
+
+                <div class="value">
+                    {{ teacher.email|default:"غير مضاف" }}
+                </div>
+
+            </div>
+
+
+            <div class="item">
+
+                <div class="label">
+                    الاسم الأول
+                </div>
+
+                <div class="value">
+                    {{ teacher.first_name|default:"غير مضاف" }}
+                </div>
+
+            </div>
+
+
+            <div class="item">
+
+                <div class="label">
+                    الاسم الأخير
+                </div>
+
+                <div class="value">
+                    {{ teacher.last_name|default:"غير مضاف" }}
+                </div>
+
+            </div>
+
+
+            <div class="item">
+
+                <div class="label">
+                    تاريخ التسجيل
+                </div>
+
+                <div class="value">
+                    {{ teacher.date_joined|date:"Y-m-d" }}
+                </div>
+
+            </div>
+
+
+            <div class="item">
+
+                <div class="label">
+                    حالة الحساب
+                </div>
+
+                <div class="value">
+
+                    {% if teacher.is_active %}
+                        نشط
+                    {% else %}
+                        غير نشط
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="card">
+
+        <h2>📋 الملف الشخصي للمعلم</h2>
+
+        <div class="info">
+
+            <div class="item">
+
+                <div class="label">
+                    رقم الهاتف
+                </div>
+
+                <div class="value">
+                    {{ profile.phone|default:"غير مضاف" }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <h3>
+            نبذة عن المعلم
+        </h3>
+
+        <div class="bio">
+
+            {{ profile.bio|default:"لم تتم إضافة نبذة عن المعلم حتى الآن." }}
+
+        </div>
+
+    </div>
+
+
+    <a href="/dashboard/teachers/" class="back">
+        ← العودة إلى المعلمين
+    </a>
+
+
+</main>
+
+</body>
+
+</html>

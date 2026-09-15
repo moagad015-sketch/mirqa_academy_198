@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>لوحة التحكم | أكاديمية مِرقاة</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f4ed;
+            color: #183c2b;
+        }
+
+        .sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 260px;
+            height: 100vh;
+            background: #183c2b;
+            color: white;
+            padding: 25px 18px;
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo h2 {
+            margin: 0;
+        }
+
+        .logo p {
+            margin-top: 8px;
+            color: #d7bd78;
+        }
+
+        .menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 14px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+
+        .menu a:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateX(-3px);
+        }
+
+        .menu .registration-link {
+            background: rgba(215, 189, 120, 0.15);
+            border: 1px solid rgba(215, 189, 120, 0.35);
+        }
+
+        .content {
+            margin-right: 260px;
+            padding: 35px;
+        }
+
+        .topbar {
+            background: white;
+            padding: 22px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .topbar h1 {
+            margin: 0;
+        }
+
+        .topbar p {
+            margin-bottom: 0;
+            color: #666;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            display: block;
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            text-decoration: none;
+            color: inherit;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .card .icon {
+            font-size: 32px;
+        }
+
+        .card h3 {
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 0;
+            line-height: 1.7;
+        }
+
+        .registration-card {
+            border: 2px solid #d7bd78;
+        }
+
+        .registration-card h3 {
+            color: #183c2b;
+        }
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .content {
+                margin-right: 0;
+                padding: 20px;
+            }
+
+            .menu {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 5px;
+            }
+
+            .menu a {
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- القائمة الجانبية -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>🌿 أكاديمية مِرقاة</h2>
+
+            <p>
+                لوحة التحكم
+            </p>
+
+        </div>
+
+
+        <nav class="menu">
+
+            <a href="{% url 'home' %}">
+                📊 الرئيسية
+            </a>
+
+
+            <a
+                href="{% url 'registration_requests' %}"
+                class="registration-link"
+            >
+                📋 طلبات التسجيل
+            </a>
+
+
+            <a href="{% url 'student_list' %}">
+                👨‍🎓 الطلاب
+            </a>
+
+
+            <a href="{% url 'teacher_list' %}">
+                👨‍🏫 المعلمون
+            </a>
+
+
+            <a href="{% url 'course_list' %}">
+                📚 الدورات
+            </a>
+
+
+            <a href="{% url 'exam_list' %}">
+                📝 الاختبارات
+            </a>
+
+
+            <a href="{% url 'certificate_list' %}">
+                🏆 الشهادات
+            </a>
+
+
+            <a href="{% url 'announcement_list' %}">
+                📢 الإعلانات
+            </a>
+
+
+            <a href="{% url 'site_settings' %}">
+                ⚙️ الإعدادات
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- المحتوى الرئيسي -->
+
+    <main class="content">
+
+
+        <section class="topbar">
+
+            <h1>
+                مرحبًا بك، {{ request.user.username }} 👋
+            </h1>
+
+            <p>
+                هذه لوحة التحكم الخاصة بأكاديمية مِرقاة.
+            </p>
+
+        </section>
+
+
+        <!-- الكروت -->
+
+        <section class="cards">
+
+
+            <!-- طلبات التسجيل -->
+
+            <a
+                href="{% url 'registration_requests' %}"
+                class="card registration-card"
+            >
+
+                <div class="icon">
+                    📋
+                </div>
+
+                <h3>
+                    طلبات التسجيل
+                </h3>
+
+                <p>
+                    مراجعة طلبات تسجيل الطلاب والمعلمين
+                    وقبولها أو رفضها.
+                </p>
+
+            </a>
+
+
+            <!-- الطلاب -->
+
+            <a
+                href="{% url 'student_list' %}"
+                class="card"
+            >
+
+                <div class="icon">
+                    👨‍🎓
+                </div>
+
+                <h3>
+                    الطلاب
+                </h3>
+
+                <p>
+                    إدارة ومتابعة الطلاب.
+                </p>
+
+            </a>
+
+
+            <!-- المعلمون -->
+
+            <a
+                href="{% url 'teacher_list' %}"
+                class="card"
+            >
+
+                <div class="icon">
+                    👨‍🏫
+                </div>
+
+                <h3>
+                    المعلمون
+                </h3>
+
+                <p>
+                    إدارة المعلمين والحسابات.
+                </p>
+
+            </a>
+
+
+            <!-- الدورات -->
+
+            <a
+                href="{% url 'course_list' %}"
+                class="card"
+            >
+
+                <div class="icon">
+                    📚
+                </div>
+
+                <h3>
+                    الدورات
+                </h3>
+
+                <p>
+                    إنشاء وإدارة الدورات التعليمية.
+                </p>
+
+            </a>
+
+
+            <!-- الاختبارات -->
+
+            <a
+                href="{% url 'exam_list' %}"
+                class="card"
+            >
+
+                <div class="icon">
+                    📝
+                </div>
+
+                <h3>
+                    الاختبارات
+                </h3>
+
+                <p>
+                    إنشاء وإدارة اختبارات الطلاب.
+                </p>
+
+            </a>
+
+
+            <!-- الشهادات -->
+
+            <a
+                href="{% url 'certificate_list' %}"
+                class="card"
+            >
+
+                <div class="icon">
+                    🏆
+                </div>
+
+                <h3>
+                    الشهادات
+                </h3>
+
+                <p>
+                    إصدار وإدارة شهادات الطلاب.
+                </p>
+
+            </a>
+
+
+            <!-- الإعلانات -->
+
+            <a
+                href="{% url 'announcement_list' %}"
+                class="card"
+            >
+
+                <div class="icon">
+                    📢
+                </div>
+
+                <h3>
+                    الإعلانات
+                </h3>
+
+                <p>
+                    إدارة إعلانات الأكاديمية.
+                </p>
+
+            </a>
+
+
+            <!-- الإعدادات -->
+
+            <a
+                href="{% url 'site_settings' %}"
+                class="card"
+            >
+
+                <div class="icon">
+                    ⚙️
+                </div>
+
+                <h3>
+                    الإعدادات
+                </h3>
+
+                <p>
+                    تعديل بيانات وإعدادات الأكاديمية.
+                </p>
+
+            </a>
+
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

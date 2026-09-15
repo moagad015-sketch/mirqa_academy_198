@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% if exam %}
+            تعديل الاختبار
+        {% else %}
+            إضافة اختبار جديد
+        {% endif %}
+        | أكاديمية مِرقاة
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+            background: #f7f5ef;
+            color: #18352b;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: #245844;
+            color: white;
+            padding: 25px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: .9;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 5px 25px rgba(0,0,0,.06);
+        }
+
+        .field {
+            margin-bottom: 22px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .required {
+            color: #b33a3a;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            background: #fff;
+            font-size: 15px;
+            color: #18352b;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #245844;
+        }
+
+        .help {
+            color: #777;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .checkbox-box {
+            background: #f7f5ef;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-box label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+        }
+
+        .error {
+            color: #b33a3a;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .errors-box {
+            background: #fff0f0;
+            border: 1px solid #e5b5b5;
+            color: #8b3030;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            padding: 13px 25px;
+            border-radius: 9px;
+            font-size: 15px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .save {
+            background: #245844;
+            color: white;
+        }
+
+        .back {
+            background: #eee;
+            color: #18352b;
+        }
+
+        .section-title {
+            margin-top: 30px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            color: #245844;
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                margin: 15px auto;
+                padding: 10px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <div class="header">
+
+        <h1>
+            {% if exam %}
+                ✏️ تعديل الاختبار
+            {% else %}
+                📝 إضافة اختبار جديد
+            {% endif %}
+        </h1>
+
+        <p>
+            أكاديمية مِرقاة — نظام الاختبارات
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+
+        {% if form.errors %}
+
+            <div class="errors-box">
+
+                <strong>⚠️ توجد أخطاء في البيانات:</strong>
+
+                {{ form.errors }}
+
+            </div>
+
+        {% endif %}
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+
+            <h2 class="section-title">
+                📋 بيانات الاختبار
+            </h2>
+
+
+            <div class="field">
+
+                <label>
+                    الدورة
+                    <span class="required">*</span>
+                </label>
+
+                {{ form.course }}
+
+                {% if form.course.errors %}
+                    <div class="error">
+                        {{ form.course.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    اسم الاختبار
+                    <span class="required">*</span>
+                </label>
+
+                {{ form.title }}
+
+                {% if form.title.errors %}
+                    <div class="error">
+                        {{ form.title.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    وصف الاختبار
+                </label>
+
+                {{ form.description }}
+
+                <div class="help">
+                    يمكنك كتابة نبذة مختصرة عن محتوى الاختبار.
+                </div>
+
+            </div>
+
+
+            <h2 class="section-title">
+                ⚙️ إعدادات الاختبار
+            </h2>
+
+
+            <div class="field">
+
+                <label>
+                    مدة الاختبار بالدقائق
+                </label>
+
+                {{ form.duration_minutes }}
+
+                <div class="help">
+                    مثال: 30 دقيقة
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    درجة النجاح
+                </label>
+
+                {{ form.passing_score }}
+
+                <div class="help">
+                    مثال: 50 تعني أن الطالب يحتاج إلى 50% للنجاح.
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    عدد المحاولات المسموح بها
+                </label>
+
+                {{ form.max_attempts }}
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    حالة الاختبار
+                </label>
+
+                {{ form.status }}
+
+            </div>
+
+
+            <div class="checkbox-box">
+
+                <label>
+
+                    {{ form.randomize_questions }}
+
+                    <span>
+                        ترتيب الأسئلة عشوائيًا
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <div class="checkbox-box">
+
+                <label>
+
+                    {{ form.show_result_immediately }}
+
+                    <span>
+                        إظهار النتيجة للطالب مباشرة بعد التسليم
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <h2 class="section-title">
+                🗓️ مواعيد الاختبار
+            </h2>
+
+
+            <div class="field">
+
+                <label>
+                    موعد بداية الاختبار
+                </label>
+
+                {{ form.start_at }}
+
+                <div class="help">
+                    اتركه فارغًا إذا لم ترغب في تحديد موعد بداية.
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    موعد نهاية الاختبار
+                </label>
+
+                {{ form.end_at }}
+
+                <div class="help">
+                    اتركه فارغًا إذا لم ترغب في تحديد موعد نهاية.
+                </div>
+
+            </div>
+
+
+            <div class="buttons">
+
+                <button
+                    type="submit"
+                    class="btn save">
+                    💾 حفظ الاختبار
+                </button>
+
+
+                <a
+                    href="{% url 'exam_list' %}"
+                    class="btn back">
+                    ↩️ العودة إلى الاختبارات
+                </a>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
