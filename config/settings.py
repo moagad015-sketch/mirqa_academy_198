@@ -14,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get(
     "DJANGO_SECRET_KEY",
-    "django-insecure-change-this-in-production"
+    r"3#k^syqj-rv)9pa3vdb82k%0q-0%j$1d&^cxz_m)ejhp-nbrv+"
 )
 
 DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
@@ -32,6 +32,19 @@ if extra_hosts:
         for host in extra_hosts.split(",")
         if host.strip()
     )
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://mirqa-academy-198.dockhosting.dev",
+]
+
+
+# =========================
+# Production Security
+# =========================
+
+SECURE_SSL_REDIRECT = not DEBUG
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 
 
 # =========================
